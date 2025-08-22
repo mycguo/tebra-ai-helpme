@@ -262,12 +262,23 @@ def get_urls(url):
 
 
 def main():
-    st.title("Knowledge Assistant")
-    st.header("Adding Documents to your knowledge base")
-    st.write("Upload some documents to get started")
+    # Import and apply the same CSS styling
+    import sys
+    sys.path.append('..')
+    from app import apply_tebra_css
+    apply_tebra_css()
+    
+    # Create custom header
+    st.markdown("""
+    <div class="main-header">
+        <h1>📚 Knowledge Base Manager</h1>
+        <p>Upload and manage documents for your AI assistant</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-   
-    st.header("Adding PDF Documents")
+    # Create sections with better styling
+    st.markdown("### 📄 PDF Documents")
+    st.markdown("Upload PDF files to add to your knowledge base")
     pdf_docs = st.file_uploader("Upload your knowledge base document", type=["pdf"], accept_multiple_files=True)
     if st.button("Submit & Process"):
         with st.spinner("Processing your PDF documents..."):
@@ -290,7 +301,8 @@ def main():
                 st.pyplot(wordcloud_plot)
                 st.success("Documents processed successfully")
 
-    st.header("Adding Word or Text Documents")
+    st.markdown("### 📝 Word & Text Documents")
+    st.markdown("Upload Word documents and text files to your knowledge base")
     word_docs = st.file_uploader("Upload your knowledge base document", type=["docx", "txt"], accept_multiple_files=True)
     if st.button("Submit & Process Documents"):
         with st.spinner("Processing your documents..."):
@@ -371,7 +383,8 @@ def main():
                 st.success("Documents processed successfully")
 
 
-    st.header("Adding Excel Documents")
+    st.markdown("### 📊 Excel Documents")
+    st.markdown("Upload Excel files to add structured data to your knowledge base")
     excel_file = st.file_uploader("Upload your knowledge base document uinsg Excel", type=["xlsx"], accept_multiple_files=False)
     if st.button("Submit & Process Excel"):
         with st.spinner("Processing your excel documents..."):
@@ -413,7 +426,8 @@ def main():
                 get_vector_store(text_chunks)
                 st.success("Documents processed successfully")
 
-    st.header("URL fetcher")
+    st.markdown("### 🌐 Website Crawler")
+    st.markdown("Extract content from websites and add to your knowledge base")
     url = st.text_input("Enter the URL")
     max_depth = st.number_input("Enter the depth you want to crawel, default is 1", value=1)
     if st.button("Submit & Process URL"):
@@ -445,7 +459,8 @@ def main():
             st.success("URL processed successfully")         
     
     
-    st.header("Audio support")
+    st.markdown("### 🎵 Audio Files")
+    st.markdown("Upload audio files for transcription and knowledge base addition")
     audio = st.file_uploader("Update your knowledge base using Audio", type=["mp3"], accept_multiple_files=False)
     if st.button("Submit & Transcribe Audio"):
         with st.spinner("Processing your audio..."):
@@ -464,7 +479,8 @@ def main():
                 st.success("Text added to knowledge base successfully")
                 
  
-    st.header("Video support")
+    st.markdown("### 🎥 Video Files")
+    st.markdown("Upload video files to extract audio and add transcriptions")
     video = st.file_uploader("Update your knowledge base using Video", type=["mp4"], accept_multiple_files=False)
     if st.button("Submit & Process Video"):
         with st.spinner("Processing your video..."):
@@ -491,7 +507,8 @@ def main():
                 st.write("")
 
 
-    st.header("Youtube Video Transcribe")
+    st.markdown("### 📺 YouTube Videos")
+    st.markdown("Extract and transcribe content from YouTube videos")
     st.write("[Note: only work locally because ffmpeg is not avaialbe in the server]")
     link = st.text_input('Enter your YouTube video link', on_change=refresh_state)
     if link:
